@@ -1,61 +1,48 @@
+const ObjectId = require('mongodb').ObjectId;
 module.exports = function(models) {
-  const shoes = [{
-      id: 100,
-      color: 'blue',
-      brand: 'Puma',
-      price: 1200,
-      size: 7,
-      in_stock: 5
-    },
-    {
-      id: 101,
-      color: 'green',
-      brand: 'Puma',
-      price: 1000,
-      size: 8,
-      in_stock: 5
-    },
-    {
-      id: 123,
-      color: 'orange',
-      brand: "Caterpillar",
-      price: 1500,
-      size: 5,
-      in_stock: 3
-    },
-    {
-      id: 200,
-      color: 'black',
-      brand: "Adidas",
-      price: 1999,
-      size: 5,
-      in_stock: 3
-    }
-  ];
 
-  const Shoes = function(req, res, next) {
-     if (!shoes) {
-       res.status(404).json({
-         message: 'No Shoes Found'
-       });
-       res.render('shoes')
-     }
-     res.json(shoes);
-   };
+  const Shoes = function(req, res) {
+    models.Shoe.find({}, function(err, results) {
+      if (err) {
+        return next(err)
+      }
+      res.json({
+        results
+      });
+    });
+  };
+  //   if (!shoes) {
+  //     res.status(404).json({
+  //       message: 'No Shoes Found'
+  //     });
+  //     res.render('shoes')
+  //   }
+  // };
 
-   const shoeBrand = function(req, res){
-       const requestBrand = req.params.brand;
+  const shoeBrand = function(req, res, next) {
+    var brand = req.params.brandname;
+    models.Shoe.find({
+      Brand: brand
+    }, function(err, brand) {
+      if (err) {
+        return next(err)
+      }
+      res.json({
+        brand
+      })
+    })
+  };
 
-       let brand = shoes.filter(brand => {
-         return shoes.brand == requestBrand;
-       });
-       if (!brand) {
-         res.status(404).json({
-           message: 'No Shoe Found'
-         });
-       }
-       res.json(brand[0]);
-     };
+  //   let brand = shoes.filter(brand => {
+  //     return shoes.brand == requestBrand;
+  //   });
+  //   if (!brand) {
+  //     res.status(404).json({
+  //       message: 'No Shoe Found'
+  //     });
+  //   }
+  //   res.json(brand[0]);
+  // };
 
   // const showBrands = function(req, res, next) {
   //   var brandname = req.params.brandname
@@ -126,24 +113,41 @@ module.exports = function(models) {
   //   // module.exports = shoes;
   // }
   //
-  // const addNewShoes = function(req, res, next) {
-  //   var newShoes = req.body
-  //   models.shoeStorage.create({
-  //     Brand: newShoes.Brand,
-  //     Color: newShoes.Color,
-  //     Price: newShoes.Price,
-  //     Size: newShoes.Size,
-  //     InStock: newShoes.InStock
-  //   }, function(err, newShoesData) {
-  //     if (err) {
-  //       return next(err)
-  //     }
-  //     res.send(newShoesData)
-  //   })
-  // }
+
+  // const addNewShoes = function(req, res, next) {  //   var newShoe = {
+  //     name: req.body.newShoe
+  //   };
+  //   if (!shoe || !shoe.name) {
+  //     req.flash('error', 'Shoe field should not be blank')
+  //   } else {
+  //     models.Shoe.create(shoe, function(err, results) {
+  //       if (err) {
+  //         return next(err);
+  //       }
+  //       req.flash('success', 'new shoe added');
+  //     })
+  //   }
+
+  const addNewShoes = function(req, res, next) {
+    var newShoes = req.body
+    models.Shoe.create({
+      Brand: newShoes.Brand,
+      Color: newShoes.Color,
+      Price: newShoes.Price,
+      Size: newShoes.Size,
+      InStock: newShoes.InStock
+    }, function(err, newData) {
+      if (err) {
+        return next(err)
+      }
+      res.send(newData)
+    });
+  }
+
 
   return {
     Shoes,
-    shoeBrand
+    shoeBrand,
+    addNewShoes
   }
-}
+};

@@ -4,23 +4,36 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const bodyParser = require('body-parser'); //req.body
-const shoeRoutes = require('./shoes_api');
+
+const ShoeRoutes = require('./shoes_api');
 const Models = require('./models');
-const models = Models(process.env.MONGO_DB_URL || 'mongodb://localhost/shoesApi');
-const ShoeRoutes = shoeRoutes(models);
-// let shoes_api = require('./shoes_api');
+
+const models = Models(process.env.MONGO_DB_URL || 'mongodb://localhost/shoes');
+
+const shoeRoutes = ShoeRoutes(models);
+
+let shoes_api = require('./shoes_api');
 const app = express();
 
 
-app.engine('.handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('.handlebars', exphbs({
+  defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 app.use(bodyParser.json())
 
 app.use(express.static('public'));
 
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 * 30 }}));
+app.use(session({
+  secret: 'keyboard cat',
+  cookie: {
+    maxAge: 60000 * 30
+  }
+}));
 // app.use(flash());
 
 
@@ -35,11 +48,11 @@ app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 * 30 }}));
 //   res.json(shoes_api);
 // });
 
-//list specific shoes in stock:
+// list specific shoes in stock:
 // app.get('/api/shoes/:id', (req, res) => {
 //   const requestId = req.params.id;
 //
-//   let shoe = shoes_api.filter(shoe => {
+//   let shoe = shoe.filter(shoe => {
 //     return shoe.id == requestId;
 //   });
 //   if (!shoe) {
@@ -77,10 +90,13 @@ app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 * 30 }}));
 //   shoes_api.push(shoe);
 //   res.json(shoe);
 // });
-app.get('/', function(req, res){res.redirect('/api/shoes')})
+app.get('/', function(req, res) {
+  res.redirect('/api/shoes')
+})
 
-app.get('/api/shoes', ShoeRoutes.Shoes);
-app.get('/api/shoes/brand/:brandname', ShoeRoutes.shoeBrand);
+app.get('/api/shoes', shoeRoutes.Shoes);
+app.post('/api/shoes', shoeRoutes.addNewShoes);
+app.get('/api/shoes/brand/:brandname', shoeRoutes.shoeBrand);
 // app.get('/api/shoes/brand/:brandname', ShoeRoutes.showBrands);
 // app.get('/api/shoes/size/:size', ShoeRoutes.showSizes);
 // app.get('/api/shoes/color/:color', ShoeRoutes.showColors);
@@ -89,8 +105,8 @@ app.get('/api/shoes/brand/:brandname', ShoeRoutes.shoeBrand);
 // app.post('/api/shoes', ShoeRoutes.addNewShoes);
 
 const port = process.env.PORT || 3018;
-app.listen(port, function(){
-        console.log('web app started on port: ' + port);
+app.listen(port, function() {
+  console.log('shoe API app started on port: ' + port);
 })
 // var express = require('express');
 // var app = express();
