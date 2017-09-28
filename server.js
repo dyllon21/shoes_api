@@ -12,7 +12,7 @@ const models = Models(process.env.MONGO_DB_URL || 'mongodb://localhost/shoes');
 
 const shoeRoutes = ShoeRoutes(models);
 
-let shoes_api = require('./shoes_api');
+// let shoes_api = require('./shoes_api');
 const app = express();
 
 
@@ -63,14 +63,14 @@ app.use(session({
 //   res.json(shoe[0]);
 // });
 
-// app.get('/api/shoes/brand/:brandname', (req, res) => {
+// app.get('/api/shoes/brand/:brandName', (req, res) => {
 //   const filterBrand = {
-//     brand: req.body.brandname
+//     brand: req.body.brandName
 //   }
-//   const requestId = req.params.brandname;
+//   const requestId = req.params.brandName;
 //
 //   let brand = shoes_api.filter(brand => {
-//     return brand.brandname == RequestId;
+//     return brand.brandName == RequestId;
 //   });
 //   brand.push(filterBrand);
 //   res.json(brand);
@@ -96,15 +96,14 @@ app.get('/', function(req, res) {
 
 app.get('/api/shoes', shoeRoutes.Shoes);
 app.post('/api/shoes', shoeRoutes.addNewShoes);
-app.get('/api/shoes/brand/:brandname', shoeRoutes.shoeBrand);
-// app.get('/api/shoes/brand/:brandname', ShoeRoutes.showBrands);
-// app.get('/api/shoes/size/:size', ShoeRoutes.showSizes);
-// app.get('/api/shoes/color/:color', ShoeRoutes.showColors);
-// app.get('/api/shoes/brand/:brandname/size/:size/color/:color', ShoeRoutes.showBrandSizeAndColor);
-// app.post('/api/shoes/sold/:name', ShoeRoutes.updateStock);
-// app.post('/api/shoes', ShoeRoutes.addNewShoes);
+app.get('/api/shoes/brand/:brandName', shoeRoutes.shoeBrand);
+app.get('/api/shoes/size/:size', shoeRoutes.showSizes);
+app.get('/api/shoes/brand/:brandName/size/:size', shoeRoutes.shoeBrandAndSize);
+app.post('/api/shoes/sold/:id', shoeRoutes.updateStock);
 
-const port = process.env.PORT || 3018;
+// app.get('/api/shoes/color/:color', ShoeRoutes.showColors);
+
+const port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('shoe API app started on port: ' + port);
 })

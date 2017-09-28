@@ -2,13 +2,14 @@ const ObjectId = require('mongodb').ObjectId;
 module.exports = function(models) {
 
   const Shoes = function(req, res) {
-    models.Shoe.find({}, function(err, results) {
+    models.Shoe.find({}, function(err, shoes) {
       if (err) {
         return next(err)
       }
       res.json({
-        results
+        shoes
       });
+      res.render('shoes')
     });
   };
   //   if (!shoes) {
@@ -20,7 +21,7 @@ module.exports = function(models) {
   // };
 
   const shoeBrand = function(req, res, next) {
-    var brand = req.params.brandname;
+    var brand = req.params.brandName;
     models.Shoe.find({
       Brand: brand
     }, function(err, brand) {
@@ -44,33 +45,37 @@ module.exports = function(models) {
   //   res.json(brand[0]);
   // };
 
-  // const showBrands = function(req, res, next) {
-  //   var brandname = req.params.brandname
-  //   models.shoeStorage.find({
-  //     Brand: brandname
-  //   }, function(err, foundBrand) {
-  //     if (err) {
-  //       return next(err)
-  //     }
-  //     res.json({
-  //       foundBrand
-  //     })
-  //   })
-  // }
-  //
-  // const showSizes = function(req, res, next) {
-  //   var size = req.params.size
-  //   models.shoeStorage.find({
-  //     Size: size
-  //   }, function(err, foundSize) {
-  //     if (err) {
-  //       return next(err)
-  //     }
-  //     res.json({
-  //       foundSize
-  //     })
-  //   })
-  // }
+
+
+  const showSizes = function(req, res, next) {
+    var size = req.params.size
+    models.Shoe.find({
+      Size: size
+    }, function(err, size) {
+      if (err) {
+        return next(err)
+      }
+      res.json({
+        size
+      })
+    })
+  };
+  const shoeBrandAndSize = function(req, res, next){
+    var size = req.params.size
+    var brand = req.params.brandName
+
+    models.Shoe.find({
+      Size : size,
+      Brand : brand
+    }, function(err, brandAndSize){
+      if(err){
+        return next(err)
+      }
+      res.json({
+        brandAndSize
+      })
+    })
+  };
   //
   // const showColors = function(req, res, next) {
   //   var color = req.params.color
@@ -108,11 +113,25 @@ module.exports = function(models) {
   //   })
   // }
   //
-  // const updateStock = function(req, res, next) {
-  //
-  //   // module.exports = shoes;
-  // }
-  //
+  const updateStock = function(req, res, next) {
+    var updateShoes = req.body
+    models.Shoe.find({
+      Id: updateShoes.Id,
+      Brand: updateShoes.Brand,
+      Color: updateShoes.Color,
+      Price: updateShoes.Price,
+      Size: updateShoes.Size,
+      InStock: updateShoes.InStock
+    }, function(err, updatedStock){
+      if(err){
+        return next(err)
+      }
+      res.json({
+        updatedStock
+      })
+    })
+  };
+
 
   // const addNewShoes = function(req, res, next) {  //   var newShoe = {
   //     name: req.body.newShoe
@@ -131,6 +150,7 @@ module.exports = function(models) {
   const addNewShoes = function(req, res, next) {
     var newShoes = req.body
     models.Shoe.create({
+      Id: newShoes.Id,
       Brand: newShoes.Brand,
       Color: newShoes.Color,
       Price: newShoes.Price,
@@ -138,7 +158,11 @@ module.exports = function(models) {
       InStock: newShoes.InStock
     }, function(err, newData) {
       if (err) {
-        return next(err)
+        if (err.code === 11000) {
+
+        } else {
+          return next(err)
+        }
       }
       res.send(newData)
     });
@@ -148,6 +172,9 @@ module.exports = function(models) {
   return {
     Shoes,
     shoeBrand,
-    addNewShoes
+    addNewShoes,
+    showSizes,
+    shoeBrandAndSize,
+    updateStock
   }
 };

@@ -1,6 +1,6 @@
 const assert = require('assert');
 const Models = require('../models');
-describe('models should be able to', function() {
+describe('models should not', function() {
 
   var models = Models('mongodb://localhost/api-tests');
 
@@ -13,39 +13,44 @@ describe('models should be able to', function() {
   it('Store Shoes to Mongodb', function(done) {
 
     var shoeData = {
-      name: 'The shoe test'
+      Brand: 'The shoe test'
     };
 
     models.Shoe.create(
       shoeData,
-      function(err) {
+      function(err, result) {
+        console.log(result);
         // done(err);
 
         models.Shoe.find({
-          name: 'The shoe test'
+          Brand: 'The shoe test'
         }, function(err, shoes) {
+          console.log(shoes);
           assert.equal(1, shoes.length);
           done(err);
         });
       });
   });
 
-  it('should not allow duplicate shoes', function(done) {
+  it('not allow duplicate shoes', function(done) {
     var shoeData = {
-      name: 'The shoe test'
+      Brand: 'The shoe test'
     };
+
     models.Shoe.create(
       shoeData,
       function(err) {
         var shoeData = {
-          name: 'The shoe test'
+          Brand: 'The shoe test'
         };
+
         models.Shoe.create(
           shoeData,
-          function(err) {
+          function(err){
             assert.ok(err, 'give an error for duplicates');
             done();
           });
       });
-  });
-})
+    });
+
+});
