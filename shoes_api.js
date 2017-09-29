@@ -9,7 +9,7 @@ module.exports = function(models) {
       res.json({
         shoes
       });
-      res.render('shoes')
+      res.render('shoes');
     });
   };
   //   if (!shoes) {
