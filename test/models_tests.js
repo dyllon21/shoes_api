@@ -1,6 +1,6 @@
 const assert = require('assert');
 const Models = require('../models');
-describe('models should not', function() {
+describe('models should', function() {
 
   var models = Models('mongodb://localhost/api-tests');
 

@@ -1,18 +1,44 @@
 'use strict';
+// var shoes = [
+//         {
+//             id : 100,
+//             color : 'lightBlue',
+//             brand : 'nike',
+//             price : 350,
+//             size : 9,
+//             in_stock : 8
+//         },
+//         {
+//             id : 101,
+//             color : 'lightBlue',
+//             brand : 'puma',
+//             price : 1700,
+//             size : 9,
+//             in_stock : 11
+//         },
+//         {
+//             id :123,
+//             color : 'lightBlue',
+//             brand : 'fila',
+//             price : 1700,
+//             size : 9,
+//             in_stock : 3
+//         }
+// ];
 
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const bodyParser = require('body-parser'); //req.body
-
+const ObjectId = require("mongodb").ObjectId;
 const ShoeRoutes = require('./shoes_api');
 const Models = require('./models');
+// let shoes = require('./shoe_api');
 
 const models = Models(process.env.MONGO_DB_URL || 'mongodb://localhost/shoes');
 
 const shoeRoutes = ShoeRoutes(models);
 
-// let shoes_api = require('./shoes_api');
 const app = express();
 
 
@@ -90,20 +116,38 @@ app.use(session({
 //   shoes_api.push(shoe);
 //   res.json(shoe);
 // });
+
 app.get('/', function(req, res) {
   res.redirect('/api/shoes')
-})
+});
+
+// app.post('/api/shoes/:id', (req, res) => {
+//   var requestId = req.params.id;
+//
+//  let shoe = shoes.filter(shoe => {
+//    return shoe.id == requestId;
+//  })[0];
+//
+//  const index = shoes.indexOf(shoe);
+//  const keys = Object.keys(req.body);
+//
+//  keys.forEach(key => {
+//    shoes[key] = shoe;
+//  });
+//
+//    res.json(shoes[index]);
+// });
 
 app.get('/api/shoes', shoeRoutes.Shoes);
 app.post('/api/shoes', shoeRoutes.addNewShoes);
 app.get('/api/shoes/brand/:brandName', shoeRoutes.shoeBrand);
 app.get('/api/shoes/size/:size', shoeRoutes.showSizes);
 app.get('/api/shoes/brand/:brandName/size/:size', shoeRoutes.shoeBrandAndSize);
-app.post('/api/shoes/sold/:id', shoeRoutes.updateStock);
+app.post('/api/shoes/sold/:id', shoeRoutes.sold);
 
 // app.get('/api/shoes/color/:color', ShoeRoutes.showColors);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3081;
 app.listen(port, function() {
   console.log('shoe API app started on port: ' + port);
 })

@@ -1,12 +1,12 @@
 {
   "name": "shoes_api",
   "version": "1.0.0",
-  "description": "",
+  "description": "this api is cool",
   "main": "shoes_api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon" 
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "Dyllon Isaacs",
@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/dyllon21/shoes_api/issues"
   },
-  "homepage": "https://github.com/dyllon21/shoes_api#readme"
+  "homepage": "https://github.com/dyllon21/shoes_api#readme",
+  "directories": {
+    "test": "test"
+  }
 }

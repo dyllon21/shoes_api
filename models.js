@@ -4,20 +4,18 @@ module.exports = function(mongoUrl) {
   mongoose.connect(mongoUrl);
 
   const ShoeSchema = mongoose.Schema({
-    id: Number,
-    brand: String,
-    color: String,
-    price: Number,
-    size: Number,
-    inStock: Number
+    Brand: String,
+    Color: String,
+    Price: Number,
+    Size: Number,
+    InStock: Number
   });
   ShoeSchema.index({
-    id: '',
-    brand: '',
-    color: '',
-    price: '',
-    size: '',
-    inStock: ''
+    Brand: '',
+    Color: '',
+    Price: '',
+    Size: '',
+    InStock: ''
   },
    {unique : true});
 
