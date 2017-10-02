@@ -35,7 +35,7 @@ const ShoeRoutes = require('./shoes_api');
 const Models = require('./models');
 // let shoes = require('./shoe_api');
 
-const models = Models(process.env.MONGO_DB_URL || 'mongodb://localhost/shoes');
+const models = Models(process.env.MONGO_DB_URL || 'mongodb://localhost/shoe-api');
 
 const shoeRoutes = ShoeRoutes(models);
 
