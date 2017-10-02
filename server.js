@@ -1,31 +1,4 @@
 'use strict';
-// var shoes = [
-//         {
-//             id : 100,
-//             color : 'lightBlue',
-//             brand : 'nike',
-//             price : 350,
-//             size : 9,
-//             in_stock : 8
-//         },
-//         {
-//             id : 101,
-//             color : 'lightBlue',
-//             brand : 'puma',
-//             price : 1700,
-//             size : 9,
-//             in_stock : 11
-//         },
-//         {
-//             id :123,
-//             color : 'lightBlue',
-//             brand : 'fila',
-//             price : 1700,
-//             size : 9,
-//             in_stock : 3
-//         }
-// ];
-
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
@@ -35,7 +8,7 @@ const ShoeRoutes = require('./shoes_api');
 const Models = require('./models');
 // let shoes = require('./shoe_api');
 
-const models = Models(process.env.MONGO_DB_URL || 'mongodb://localhost/shoe-api');
+const models = Models(process.env.MONGO_DB_URL || 'mongodb://localhost/shoes');
 
 const shoeRoutes = ShoeRoutes(models);
 
@@ -139,10 +112,11 @@ app.get('/', function(req, res) {
 // });
 
 app.get('/api/shoes', shoeRoutes.Shoes);
-app.post('/api/shoes', shoeRoutes.addNewShoes);
 app.get('/api/shoes/brand/:brandName', shoeRoutes.shoeBrand);
 app.get('/api/shoes/size/:size', shoeRoutes.showSizes);
 app.get('/api/shoes/brand/:brandName/size/:size', shoeRoutes.shoeBrandAndSize);
+
+app.post('/api/shoes', shoeRoutes.addNewShoes);
 app.post('/api/shoes/sold/:id', shoeRoutes.sold);
 
 // app.get('/api/shoes/color/:color', ShoeRoutes.showColors);
@@ -151,16 +125,3 @@ const port = process.env.PORT || 3081;
 app.listen(port, function() {
   console.log('shoe API app started on port: ' + port);
 })
-// var express = require('express');
-// var app = express();
-//
-// app.use(function(req, res, next){
-//   console.log('the leaves on the trees are', req.query.color);
-//   next();
-// });
-//
-// var port = process.env.PORT || 3000;
-//
-// app.listen(port, function(){
-//   console.log('express server is listening on port', port);
-// });

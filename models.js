@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 module.exports = function(mongoUrl) {
-  mongoose.connect(mongoUrl);
+  mongoose.connect(mongoURL);
 
-  mongoose.connect(mongoUrl, {
+  mongoose.connect(mongoURl, {
     useMongoClient: true
 }, function(err) {
     if (err) {

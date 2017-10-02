@@ -1,5 +1,3 @@
-// let shoes_api = require('./shoes_api');
-
 const ObjectId = require('mongodb').ObjectId;
 module.exports = function(models) {
   'use strict';
@@ -12,7 +10,6 @@ module.exports = function(models) {
       res.json({
         shoes
       });
-      // res.render('shoes');
     });
   };
   //   if (!shoes) {
@@ -37,19 +34,6 @@ module.exports = function(models) {
     })
   };
 
-  //   let brand = shoes.filter(brand => {
-  //     return shoes.brand == requestBrand;
-  //   });
-  //   if (!brand) {
-  //     res.status(404).json({
-  //       message: 'No Shoe Found'
-  //     });
-  //   }
-  //   res.json(brand[0]);
-  // };
-
-
-
   const showSizes = function(req, res, next) {
     var size = req.params.size
     models.Shoe.find({
@@ -63,6 +47,7 @@ module.exports = function(models) {
       })
     })
   };
+
   const shoeBrandAndSize = function(req, res, next) {
     var size = req.params.size;
     var brand = req.params.brandName;
@@ -126,14 +111,16 @@ module.exports = function(models) {
       req.params.id,
       function(err, result) {
         if (err) {
-          console.log(err);
+          return next(err)
+          // console.log(err);
         }
         if (result) {
-          console.log(result);
+          return next(err)
+          // console.log(result);
           result.InStock--;
           result.save(function(err, result) {
             if (err) {
-              console.log(err);
+              return next(err)
             }
             if (result) {
               res.json(result)
@@ -149,7 +136,7 @@ module.exports = function(models) {
     var newShoes = req.body
     // console.log(req.body);
     models.Shoe.create({
-      Id: newShoes.Id,
+      // Id: newShoes.Id,
       Brand: newShoes.Brand,
       Color: newShoes.Color,
       Price: newShoes.Price,
