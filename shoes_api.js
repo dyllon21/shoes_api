@@ -82,7 +82,6 @@ module.exports = function(models) {
   // }
   //
   //
-
   // const showBrandSizeAndColor = function(req, res, next) {
   //   var brandname = req.params.brandname;
   //   var size = req.params.size;
@@ -107,28 +106,30 @@ module.exports = function(models) {
   const sold = function(req, res, next) {
     var requestId = req.params.id;
     // console.log(ShoeId);
-    models.Shoe.findById(
-      req.params.id,
-      function(err, result) {
-        if (err) {
-          return next(err)
-          // console.log(err);
-        }
-        if (result) {
-          return next(err)
-          // console.log(result);
-          result.InStock--;
-          result.save(function(err, result) {
-            if (err) {
-              return next(err)
-            }
-            if (result) {
-              res.json(result)
-            }
-          })
-        }
+    models.Shoe.findOneAndUpdate({
+      _id : ObjectId(requestId)
+    }, {
+      $inc: {
+        'InStock' : -1
+      },
+    }, {
+      upsert : false
 
-      })
+    }, function(err, result){
+      if(err){
+        return res.json({
+          status : 'error',
+          error : err,
+          selling : []
+        })
+      }else {
+        res.json({
+          status : 'success',
+          selling: result
+        })
+      }
+    })
+
   };
 
 
@@ -136,7 +137,7 @@ module.exports = function(models) {
     var newShoes = req.body
     // console.log(req.body);
     models.Shoe.create({
-      // Id: newShoes.Id,
+      Id: newShoes.Id,
       Brand: newShoes.Brand,
       Color: newShoes.Color,
       Price: newShoes.Price,

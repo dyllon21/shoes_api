@@ -31,8 +31,12 @@ app.use(session({
   secret: 'keyboard cat',
   cookie: {
     maxAge: 60000 * 30
-  }
+  },
+  resave: true,
+ saveUninitialized: true
 }));
+
+var format = require('util').format;
 // app.use(flash());
 
 
@@ -121,7 +125,7 @@ app.post('/api/shoes/sold/:id', shoeRoutes.sold);
 
 // app.get('/api/shoes/color/:color', ShoeRoutes.showColors);
 
-const port = process.env.PORT || 3081;
+const port = process.env.PORT || 3001;
 app.listen(port, function() {
   console.log('shoe API app started on port: ' + port);
 })
