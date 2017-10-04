@@ -7,18 +7,12 @@ module.exports = function(models) {
       if (err) {
         return next(err)
       }
-      res.json({
-        shoes
+        res.json({
+          shoes
+        });
       });
-    });
-  };
-  //   if (!shoes) {
-  //     res.status(404).json({
-  //       message: 'No Shoes Found'
-  //     });
-  //     res.render('shoes')
-  //   }
-  // };
+    };
+
 
   const shoeBrand = function(req, res, next) {
     var brand = req.params.brandName;

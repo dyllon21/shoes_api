@@ -11,8 +11,18 @@ const Models = require('./models');
 const models = Models(process.env.MONGO_DB_URL || 'mongodb://localhost/shoes');
 
 const shoeRoutes = ShoeRoutes(models);
-
 const app = express();
+
+app.use(function(req, res, next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type", "Accept");
+  if(req.methos === "OPTIONS"){
+    res.header("Access-Control-Allow-Methods", "POST,GET");
+    return res.status(200).json({});
+  }
+  next();
+});
+
 
 
 app.engine('.handlebars', exphbs({
@@ -39,6 +49,23 @@ app.use(session({
 var format = require('util').format;
 // app.use(flash());
 
+//catch 404 and forward to error handler:
+// app.use(function(req, res, next){
+//   var err = new Error("not found");
+//   err.status = 404;
+//   next(err);
+// });
+
+// Error Handler:
+// app.use(function(err, req, res, next){
+//   res.status(err.status || 500);
+//   res.json({
+//     error: {
+//       message: err.message
+//     }
+//   });
+//
+// });
 
 //list all shoes in stock:
 // app.get('/api/shoes', (req, res) => {
@@ -114,7 +141,6 @@ app.get('/', function(req, res) {
 //
 //    res.json(shoes[index]);
 // });
-
 app.get('/api/shoes', shoeRoutes.Shoes);
 app.get('/api/shoes/brand/:brandName', shoeRoutes.shoeBrand);
 app.get('/api/shoes/size/:size', shoeRoutes.showSizes);

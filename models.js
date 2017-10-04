@@ -9,7 +9,7 @@ module.exports = function(mongoUrl) {
     if (err) {
         console.log(err);
     } else {
-        console.log("This is where the awesome takes place");
+        console.log("You Having Fun!?");
     }
 });
 
