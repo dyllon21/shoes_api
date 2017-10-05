@@ -60,20 +60,23 @@ module.exports = function(models) {
   };
 
   //
-  // const showColors = function(req, res, next) {
-  //   var color = req.params.color
-  //
-  //   models.shoeStorage.find({
-  //     Color: color
-  //   }, function(err, foundColor) {
-  //     if (err) {
-  //       return next(err)
-  //     }
-  //     res.json({
-  //       foundColor
-  //     })
-  //   })
-  // }
+  const showColorAndSize = function(req, res, next) {
+    var color = req.params.color;
+    var size = req.params.size
+
+    models.Shoe.find({
+      Color: color,
+      Size: size
+    }, function(err, color) {
+      if (err) {
+        return next(err)
+      }
+      res.json({
+        color,
+        size
+      })
+    })
+  }
   //
   //
   // const showBrandSizeAndColor = function(req, res, next) {
@@ -155,6 +158,7 @@ module.exports = function(models) {
     addNewShoes,
     showSizes,
     shoeBrandAndSize,
+    showColorAndSize,
     sold
   };
 };

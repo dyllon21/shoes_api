@@ -49,78 +49,6 @@ app.use(session({
 var format = require('util').format;
 // app.use(flash());
 
-//catch 404 and forward to error handler:
-// app.use(function(req, res, next){
-//   var err = new Error("not found");
-//   err.status = 404;
-//   next(err);
-// });
-
-// Error Handler:
-// app.use(function(err, req, res, next){
-//   res.status(err.status || 500);
-//   res.json({
-//     error: {
-//       message: err.message
-//     }
-//   });
-//
-// });
-
-//list all shoes in stock:
-// app.get('/api/shoes', (req, res) => {
-//   if (!shoes_api) {
-//     res.status(404).json({
-//       message: 'No Shoes Found'
-//     });
-//     res.render('shoes')
-//   }
-//   res.json(shoes_api);
-// });
-
-// list specific shoes in stock:
-// app.get('/api/shoes/:id', (req, res) => {
-//   const requestId = req.params.id;
-//
-//   let shoe = shoe.filter(shoe => {
-//     return shoe.id == requestId;
-//   });
-//   if (!shoe) {
-//     res.status(404).json({
-//       message: 'No Shoe Found'
-//     });
-//   }
-//   res.json(shoe[0]);
-// });
-
-// app.get('/api/shoes/brand/:brandName', (req, res) => {
-//   const filterBrand = {
-//     brand: req.body.brandName
-//   }
-//   const requestId = req.params.brandName;
-//
-//   let brand = shoes_api.filter(brand => {
-//     return brand.brandName == RequestId;
-//   });
-//   brand.push(filterBrand);
-//   res.json(brand);
-// });
-// //add new shoes to stock:
-// app.post('/api/shoes', (req, res) => {
-//
-//   const shoe = {
-//     id: shoes_api.length + 1,
-//     color: req.body.color,
-//     brand: req.body.brand,
-//     price: req.body.price,
-//     size: req.body.size,
-//     in_stock: req.body.in_stock
-//   }
-//
-//   shoes_api.push(shoe);
-//   res.json(shoe);
-// });
-
 app.get('/', function(req, res) {
   res.redirect('/api/shoes')
 });
@@ -141,15 +69,32 @@ app.get('/', function(req, res) {
 //
 //    res.json(shoes[index]);
 // });
+
 app.get('/api/shoes', shoeRoutes.Shoes);
 app.get('/api/shoes/brand/:brandName', shoeRoutes.shoeBrand);
 app.get('/api/shoes/size/:size', shoeRoutes.showSizes);
 app.get('/api/shoes/brand/:brandName/size/:size', shoeRoutes.shoeBrandAndSize);
+app.get('/api/shoes/color/:color/size/:size', shoeRoutes.showColorAndSize);
 
 app.post('/api/shoes', shoeRoutes.addNewShoes);
 app.post('/api/shoes/sold/:id', shoeRoutes.sold);
 
-// app.get('/api/shoes/color/:color', ShoeRoutes.showColors);
+
+app.use(function(req, res, next) {
+  var err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
+
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({
+    error: {
+      Status: err.status,
+      message: err.message
+    }
+  });
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port, function() {
