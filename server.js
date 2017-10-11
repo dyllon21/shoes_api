@@ -53,23 +53,6 @@ app.get('/', function(req, res) {
   res.redirect('/api/shoes')
 });
 
-// app.post('/api/shoes/:id', (req, res) => {
-//   var requestId = req.params.id;
-//
-//  let shoe = shoes.filter(shoe => {
-//    return shoe.id == requestId;
-//  })[0];
-//
-//  const index = shoes.indexOf(shoe);
-//  const keys = Object.keys(req.body);
-//
-//  keys.forEach(key => {
-//    shoes[key] = shoe;
-//  });
-//
-//    res.json(shoes[index]);
-// });
-
 app.get('/api/shoes', shoeRoutes.Shoes);
 app.get('/api/shoes/brand/:brandName', shoeRoutes.shoeBrand);
 app.get('/api/shoes/size/:size', shoeRoutes.showSizes);
@@ -81,7 +64,7 @@ app.post('/api/shoes/sold/:id', shoeRoutes.sold);
 
 
 app.use(function(req, res, next) {
-  var err = new Error("Not Found");
+  var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -95,6 +78,7 @@ app.use(function(err, req, res, next) {
     }
   });
 });
+
 
 const port = process.env.PORT || 3001;
 app.listen(port, function() {
