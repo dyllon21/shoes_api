@@ -1,4 +1,20 @@
 //IMPLEMENTING AJAX CALLS FROM THE API TO FRONTEND
+var showModalBTN = document.getElementById('modalActive');
+var closeModal = document.querySelector('.close');
+
+// showModalBTN.addEventListener('click', function() {
+//     modal.classList.remove("inactiveModal");
+//     form.classList.remove("inactiveForm");
+//     form.classList.add('formActive');
+//     modal.classList.add("activeModal");
+// });
+//
+// closeModal.addEventListener('click', function() {
+//     hideModal();
+//     form.classList.add('inactiveForm');
+//     form.classList.remove('formActive');
+//     clearInput();
+// });
 
 //function to show all shoes:
 function showAllShoes() {
@@ -23,7 +39,7 @@ function shoeBrandAndSize() {
   var selectedBrand = document.getElementById('brandSelect').value;
 
   $.ajax({
-    url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes/' + selectedBrand + '/size/' + selectedSize,
+    url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes/brand/' + selectedBrand + '/size/' + selectedSize,
     type: 'GET'
   }).done(function(results) {
     //compiling handlebars templates:
