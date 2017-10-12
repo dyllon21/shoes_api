@@ -1,9 +1,23 @@
 //IMPLEMENTING AJAX CALLS FROM THE API TO FRONTEND
 
-// var showModalBTN = document.getElementById('modalActive');
-// var closeModal = document.querySelector('.close');
+const urlCall = "http://localhost:3000/api/shoes";
 
 //AJAX CALL function to show all shoes:
+
+$.ajax({
+  url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes',
+  type: 'GET'
+}).done(function(results) {
+  //compiling handlebars templates:
+  var template = document.querySelector('#shoeStock').innerHTML;
+  var myTemplate = Handlebars.compile(template);
+
+  result = myTemplate({
+    shoeDetails: results.shoes
+  });
+  document.getElementById('Results').innerHTML = result;
+});
+
 function showAllShoes() {
   $.ajax({
     url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes',
@@ -118,4 +132,24 @@ $('#Results').on('click', function(e) {
     }
   })
   alert("shoe has been successfully purchased")
+});
+
+$('#myInput').on('keyup', function() {
+
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        tdS = tr[i].getElementsByTagName("td")[2];
+        if (td || tdS) {
+            if (td.innerHTML.toUpperCase().indexOf(filter) > -1 || td.innerHTML.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
 });
