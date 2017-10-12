@@ -1,11 +1,9 @@
 //IMPLEMENTING AJAX CALLS FROM THE API TO FRONTEND
-
-const urlCall = "http://localhost:3000/api/shoes";
-
+const url = 'https:glacial-chamber-96325.herokuapp.com/api/shoes';
 //AJAX CALL function to show all shoes:
 
 $.ajax({
-  url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes',
+  url: url,
   type: 'GET'
 }).done(function(results) {
   //compiling handlebars templates:
@@ -20,7 +18,7 @@ $.ajax({
 
 function showAllShoes() {
   $.ajax({
-    url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes',
+    url: url,
     type: 'GET'
   }).done(function(results) {
     //compiling handlebars templates:
@@ -40,7 +38,7 @@ function shoeBrandAndSize() {
   var selectedBrand = document.getElementById('brandSelect').value;
 
   $.ajax({
-    url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes/brand/' + selectedBrand + '/size/' + selectedSize,
+    url: url,
     type: 'GET'
   }).done(function(results) {
     //compiling handlebars templates:
@@ -59,7 +57,7 @@ function shoeBrand() {
   var selectedBrand = document.getElementById('brandSelect').value;
 
   $.ajax({
-    url: "https://glacial-chamber-96325.herokuapp.com/api/shoes/brand/" + selectedBrand,
+    url: url,
     type: "GET"
   }).done(function(results) {
     //compiling handlebars templates:
@@ -77,7 +75,7 @@ function shoeBrand() {
 function shoeSize() {
   var selectedSize = document.getElementById('sizeSelect').value;
   $.ajax({
-    url: "https://glacial-chamber-96325.herokuapp.com/api/shoes/size/" + selectedSize,
+    url: url,
     type: "GET"
   }).done(function(results) {
     //compiling handlebars templates:
@@ -101,7 +99,7 @@ $('.submit').on('click', function() {
     InStock: document.querySelector('#inStock').value
   }
   $.ajax({
-    url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes/',
+    url: url.
     type: 'POST',
     data: shoes,
     success: function(err, result) {
@@ -123,33 +121,31 @@ $('.submit').on('click', function() {
 $('#Results').on('click', function(e) {
   var sold = e.target.value;
   $.ajax({
-    url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes/sold/' + sold,
+    url: url,
     type: 'POST',
     dataType: 'application/json',
-    success: function(result) {
-    },
-    error: function(error){
-    }
+    success: function(result) {},
+    error: function(error) {}
   })
   alert("shoe has been successfully purchased")
 });
 
-$('#myInput').on('keyup', function() {
+$('#search').on('keyup', function() {
 
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        tdS = tr[i].getElementsByTagName("td")[2];
-        if (td || tdS) {
-            if (td.innerHTML.toUpperCase().indexOf(filter) > -1 || td.innerHTML.indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("search");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td || td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1 || td.innerHTML.indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
     }
+  }
 });
