@@ -3,7 +3,7 @@
 //function to show all shoes:
 function showAllShoes() {
   $.ajax({
-    url: '/api/shoes',
+    url: '5000/api/shoes',
     type: 'GET'
   }).done(function(results) {
     //compiling handlebars templates:
@@ -23,7 +23,7 @@ function shoeBrandAndSize() {
   var selectedBrand = document.getElementById('brandSelect').value;
 
   $.ajax({
-    url: '/api/shoes/brand/' + selectedBrand + '/size/' + selectedSize,
+    url: '5000/api/shoes/brand/' + selectedBrand + '/size/' + selectedSize,
     type: 'GET'
   }).done(function(results) {
     //compiling handlebars templates:
@@ -41,7 +41,7 @@ function shoeBrand() {
   var selectedBrand = document.getElementById('brandSelect').value;
 
   $.ajax({
-    url: "/api/shoes/brand/" + selectedBrand,
+    url: "http://localhost:5000/api/shoes/brand/" + selectedBrand,
     type: "GET"
   }).done(function(results) {
     //compiling handlebars templates:
@@ -58,7 +58,7 @@ function shoeBrand() {
 function shoeSize() {
   var selectedSize = document.getElementById('sizeSelect').value;
   $.ajax({
-    url: "/api/shoes/size/" + selectedSize,
+    url: "http://localhost:5000/api/shoes/size/" + selectedSize,
     type: "GET"
   }).done(function(results) {
     //compiling handlebars templates:
@@ -82,7 +82,7 @@ $('.submit').on('click', function() {
     InStock: document.querySelector('#inStock').value
   }
   $.ajax({
-    url: '/api/shoes/',
+    url: 'http://localhost:5000/api/shoes/',
     type: 'POST',
     data: shoes,
     success: function(err, result) {
@@ -104,7 +104,7 @@ $('#Results').on('click', function(e) {
   var sold = e.target.value;
   // console.log(sold);
   $.ajax({
-    url: '/api/shoes/sold/' + sold,
+    url: 'http://localhost:5000/api/shoes/sold/' + sold,
     type: 'POST',
     dataType: 'application/json',
     success: function(result) {
