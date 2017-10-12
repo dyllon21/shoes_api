@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="shoe_catalogue.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title><em>Shoe</em> <em>API</em></title>
+</head>
+
+<body class="container" align='center'>
+  <h1><em>DYLLON'S</em> <em>SHOEWEAR</em><sup>&reg;</sup></h1>
+  <hr>
+  <br>
+  <label>
+  <div class="container">
+         <div class="row">
+             <div class="col-sm-4">
+                 <form class="form-group jumbotron" method="post">
+                   <h3><b>Add New Stock Here</b></h3>
+                     <input class="form-control" id="brand" type="text" name="brand" value="" placeholder="brand">
+                     <br>
+                     <input class="form-control" id="color" type="text" name="color" value="" placeholder="color">
+                     <br>
+                     <input class="form-control" id="size" type="text" name="size" value="" placeholder="size">
+                     <br>
+                     <input class="form-control" id="inStock" type="text" name="inStock" value="" placeholder="Instock">
+                     <br>
+                     <input class="form-control" id="price" type="text" name="price" value="" placeholder="price">
+                     <br>
+                     <button class='submit btn btn-success' type="button" name="button">Add Stock</button> |
+                     <input class="btn btn-primary" id="btn" onclick="showAllShoes()" type="button" name="" value="Show All Shoes"</input>
+                 </form>
+             </div>
+           </label>
+  <label>
+  <h2>Choose Brand:</h2>
+  <input id="brandSelect" type="undefined" list="brands" placeholder="Brand">
+  <datalist id="brands">
+    <option select value = ""></option>
+    <option value = "dakotas"></option>
+    <option value = "Reeboks"></option>
+    <option value = "nike"></option>
+    <option value = "tomi"></option>
+    <option value = "fila"></option>
+    <option value = "subago"></option>
+    <option value = "timbeland"></option>
+  </datalist>
+  <input class="btn btn-success" id="Btn" onclick="shoeBrand()" type="button" name="" value="filter"</input></td>
+</label>
+
+  <label>
+  <h3>Choose Size</h3>
+  <input id="sizeSelect" type="undefined" list="sizes" placeholder="Size">
+  <datalist id="sizes">
+    <option value = "1"></option>
+    <option value = "2"></option>
+    <option value = "3"></option>
+    <option value = "4"></option>
+    <option value = "5"></option>
+    <option value = "6"></option>
+    <option value = "7"></option>
+    <option value = "8"></option>
+    <option value = "9"></option>
+    <option value = "10"></option>
+  </datalist>
+  <input class="btn btn-success" id="Btn" onclick="shoeSize()" type="button" name="" value="filter"</input></td>
+</label>
+  </form>
+
+  <br>
+  <center>
+    <div class="display">
+      <script id='shoeStock' type="text/handlebars-x">
+        <table id="myTable" class="table table-bordered table-striped">
+          <tr>
+            <th>Brand</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>InStock</th>
+            <th>Price</th>
+            <td></td>
+          </tr>
+          {{#each shoeDetails}}
+          <tr class="content" data-type="data">
+            <td class="td active" style="border-radius: 5px">{{Brand}}</td>
+            <td class="td active" style="border-radius: 5px">{{Color}}</td>
+            <td class="td active" style="border-radius: 5px">{{Size}}</td>
+            <td class="td active" style="border-radius: 5px">{{InStock}}</td>
+            <td class="td active" style="border-radius: 5px"> R {{Price}}.00 <br>
+            <div class=" popup col-1">
+              <form class=" form-group" method="post">
+                <td><button value={{_id}} class=" btn btn-success">Purchase</button></td>
+              </form>
+          </tr>
+          {{/each}}
+        </table>
+      </script>
+    </div>
+    </div>
+    </div>
+
+    <!-- <div class="display">
+    <script id='shoeStock' type="text/handlebars-x">
+
+    <table class="" border="1px" align="center">
+    <tbody>
+    <thead>
+    <tr>
+    <th colspan="7">Stock avalailable</th>
+  </tr>
+  <tr>
+  <th>Shoe ID</th>
+  <th>Brand</th>
+  <th>Color</th>
+  <th>Size</th>
+  <th>Price</th>
+  <th>InStock</th>
+</tr>
+</thead>
+{{#each shoeDetails}}
+<tr>
+<th>{{_id}}</th>
+<td>{{brand}}</td>
+<td>{{clor}}</td>
+<td>{{size}}</td>
+<td>R {{price}}.00<br>
+<input class="btn btn-success" id="IDselect" onclick="sold()" type="button" name="" value="Buy"</input></td>
+<td>{{InStock}}</td>
+{{/each}}
+</tr>
+</table>
+</script>
+</div> -->
+  </center>
+
+  <input class="btn btn-primary" id="btn2" onclick="shoeBrandAndSize()" type="button" name="" value="Search Stock" </input>
+  <hr>
+  </hr>
+
+  <div id="Results"></div>
+
+</body>
+<script type="text/javascript" src="handlebars-v4.0.5.js"></script>
+<script src="shoe_catalogue.js" charset="utf-8"></script>
+
+</html>
+
+<!-- <div id = "stock">
+    <h3>Choose shoe brand:</h3>
+    <input type = "text" list = "brands" placeholder = "Shoe brand" id = "brandDrop">
+    <dataList id = "brands">
+      <option value = "Puma"></option>
+      <option value = "Adidas"></option>
+      <option value = "Catapillar"></option>
+      <option value = "Cavellas"></option>
+      <option value = "Sketchers"></option>
+    </datalist> -->
