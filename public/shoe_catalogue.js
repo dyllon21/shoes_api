@@ -82,7 +82,7 @@ $('.submit').on('click', function() {
     InStock: document.querySelector('#inStock').value
   }
   $.ajax({
-    url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes/api/shoes/',
+    url: 'https://glacial-chamber-96325.herokuapp.com/api/shoes/',
     type: 'POST',
     data: shoes,
     success: function(err, result) {
