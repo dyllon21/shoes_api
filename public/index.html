@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,6 +29,7 @@
 
   <label>
   <div class="container">
+    <form class="form-group jumbotron">
          <div class="row">
              <div class="col-sm-4">
                  <form class="form-group jumbotron" method="post">
@@ -48,10 +48,30 @@
                      <input class="btn btn-primary" id="btn" onclick="showAllShoes()" type="button" name="" value="Show All Shoes"</input>
                  </form>
              </div>
-
+             <hr>
            </label>
-  <label>
-  <h3>Choose Brand:</h3>
+
+  <div class="searchForm">
+      <h3><b>Search form</b></h3>
+      <label>
+      <div class="Button">
+        <div class="display">
+          <form class="form-inline float-center" action="index.html" method="post">
+            <h3><b>Search For Size Individually</b></h3>
+            <input id="search" type="text" name="" value="" class="search form-control" placeholder="enter size ">
+          </form>
+        </div>
+      </div>
+      <div class="Button">
+        <div class="displayBrand">
+          <form class="form-inline float-center" action="index.html" method="post">
+            <h3><b>Search For Brand Individually</b></h3>
+            <input id="filter" type="text" name="brand" value="" class="search form-control" placeholder="enter brand ">
+          </form>
+        </div>
+      </div>
+
+  <h3>Search Brand:</h3>
   <input id="brandSelect" type="undefined" list="brands" placeholder="Brand">
   <datalist id="brands">
     <option select value = ""></option>
@@ -63,10 +83,8 @@
     <option value = "subago"></option>
     <option value = "timbeland"></option>
   </datalist>
-</label>
 
-  <label>
-  <h3>Choose Size</h3>
+  <h3>Search Size</h3>
   <input id="sizeSelect" type="undefined" list="sizes" placeholder="Size">
   <datalist id="sizes">
     <option value = "1"></option>
@@ -79,20 +97,10 @@
     <option value = "8"></option>
     <option value = "9"></option>
     <option value = "10"></option>
-  </datalist>
-  <!-- <input class="btn btn-success" onclick="shoeSize()" || onclick="shoeBrand()" type="button" name="" value="filter"</input> -->
+</datalist>
 </label>
-  <div class="Button">
-    <input class="btn btn-primary" id="searchBTN" onclick="shoeBrandAndSize()" type="button" name="" value="Search Stock" </input>
-  </div>
-  <hr>
-  <center>
-    <div class="display">
-
-      <form class="form-inline float-right" action="index.html" method="post">
-        <h3><b>check for brand or size only</b></h3>
-        <input id="search" type="text" name="" value="" class="search form-control" placeholder="search size or brand">
-      </form>
+      <center>
+        <input class="btn btn-primary" id="searchBTN" onclick="shoeBrandAndSize()" type="button" name="" value="Search Stock" </input>
 
       <script id='shoeStock' type="text/handlebars-x">
         <table id="table" class="table table-bordered table-striped">
@@ -113,21 +121,21 @@
             <td class="td active" style="border-radius: 5px"> R {{Price}}.00 <br>
               <div class=" popup col-1">
                 <form class=" form-group" method="post">
-                  <td><button value={{_id}} class=" btn btn-success">Purchase</button></td>
+                  <td><button value={{_id}} onClick="window.location.reload()" class=" btn btn-success">Purchase</button></td>
                 </form>
           </tr>
           {{/each}}
         </table>
       </script>
       </div>
-    </div>
-  </center>
-  <hr>
-  <div id="Results">
-
   </div>
-
+</form>
+  </center>
+  <div id="Results">
+  </div>
+  </div>
 </div>
+
 </body>
 <script type="text/javascript" src="handlebars-v4.0.5.js"></script>
 <script src="shoe_catalogue.js" charset="utf-8"></script>
