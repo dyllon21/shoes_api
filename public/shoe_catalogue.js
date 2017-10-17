@@ -116,7 +116,7 @@ $('.submit').on('click', function() {
   color.value = " ";
   price.value = " ";
   inStock.value = " ";
-  // alert("shoe has been added")
+  alert("shoe has been added")
 });
 
 // AJAX CALL function to sell shoes
