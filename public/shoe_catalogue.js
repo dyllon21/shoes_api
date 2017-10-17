@@ -36,8 +36,6 @@ function showAllShoes() {
 function shoeBrandAndSize() {
   var selectedSize = document.getElementById('sizeSelect').value;
   var selectedBrand = document.getElementById('brandSelect').value;
-console.log(selectedSize);
-console.log(selectedBrand);
 
   $.ajax({
     url: '/api/shoes/brand/' + selectedBrand + '/size/' + selectedSize,
@@ -94,6 +92,7 @@ function shoeSize() {
 // AJAX CALL function to add new stock
 $('.submit').on('click', function() {
   var shoes = {
+    message: '',
     Brand: document.querySelector('#brand').value,
     Size: document.querySelector('#size').value,
     Color: document.querySelector('#color').value,
@@ -104,6 +103,7 @@ $('.submit').on('click', function() {
     url: '/api/shoes/',
     type: 'POST',
     data: shoes,
+    message: 'shoe has been added',
     success: function(err, result) {
       console.log(err);
     },
@@ -116,7 +116,7 @@ $('.submit').on('click', function() {
   color.value = " ";
   price.value = " ";
   inStock.value = " ";
-  alert("shoe has been added")
+  // alert("shoe has been added")
 });
 
 // AJAX CALL function to sell shoes
