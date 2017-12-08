@@ -8,8 +8,7 @@
 * Prerequisites
 * License
 
-
-
+# Information
 
 - Display shoes from database without pressing the 'all shoes button'
 - Display shoes in table format.
